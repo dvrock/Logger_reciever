@@ -3,9 +3,10 @@ const app = express();
 const cors = require("cors");
 app.use(cors());
 const controllers = require("./controllers/controller");
+const {authorizer} = require("./authorizer/authorizer")
 
 app.use("/", express.json());
-app.post("/form_submit", controllers.DataSubmit);
+app.post("/form_submit",authorizer, controllers.DataSubmit);
 app.use("*", (req, res, error) => {
   res.json({ message: error.message, status: 400 });
 });
